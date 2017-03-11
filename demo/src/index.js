@@ -5,51 +5,48 @@ import Streamux from '../../lib';
 import App from './App';
 
 const mount = document.getElementById('mount');
-const streamux = Streamux();
+const streamux = Streamux(reducer);
 
-// (actions, on) => (state = { count: 0 }, action) => {
-//   on(actions.INCREMENT, Object.assign({}, state, {
-//     count: state.count + 1
-//   }))
+function reducer(state = {}, action, types){
+  return Streamux.combine({
+    counter
+  })(state, action, types);
+  // switch(action.type) {
+  //   case INCREMENT:
+  //     return Object.assign({}, state, {
+  //       count: state.count + 1
+  //     });
+  //   case DECREMENT: 
+  //     return Object.assign({}, state, {
+  //       count: state.count - 1
+  //     });    
+  //   default:
+  //     return state;
+  // }
+}
 
-//   on(actions.DECREMENT, Object.assign({}, state, {
-//     count: state.count - 1
-//   }))
-// }
+function counter(state = { count: 0 }, action, types) {
+  const { 
+    INCREMENT, 
+    DECREMENT 
+  } = types;
 
-// (actions, on, root) => (state =  {}, action) => {
-//   root({
-//     counter
-//   });
-// }
-
-streamux.addReducer('counter', (state = { count: 0 }, action) => {
-  if (action.name === 'INCREMENT') {
-    return Object.assign({}, state, {
-      count: state.count + 1
-    });
+  switch(action.type) {
+    case INCREMENT:
+      return Object.assign({}, state, {
+        count: state.count + 1
+      });
+    case DECREMENT: 
+      return Object.assign({}, state, {
+        count: state.count - 1
+      });    
+    default:
+      return state;
   }
+}
 
-  if (action.name === 'DECREMENT') {
-    return Object.assign({}, state, {
-      count: state.count - 1
-    });
-  }
-
-  return state;
-});
-
-const increment = streamux.bindAction(() => {
-  return {
-    name: 'INCREMENT'
-  }
-});
-
-const decrement = streamux.bindAction(() => {
-  return {
-    name: 'DECREMENT'
-  }
-});
+const increment = streamux.createAction('INCREMENT');
+const decrement = streamux.createAction('DECREMENT');
 
 const undo = () => {
   streamux.undo(1);
