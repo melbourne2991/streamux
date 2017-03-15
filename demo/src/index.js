@@ -3,27 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Streamux from '../../lib';
 import App from './App';
+import devtools from '../../devtools/dist/bundle.js';
 
 const mount = document.getElementById('mount');
-const streamux = Streamux(reducer);
-
-function reducer(state = {}, action, types){
-  return Streamux.combine({
-    counter
-  })(state, action, types);
-  // switch(action.type) {
-  //   case INCREMENT:
-  //     return Object.assign({}, state, {
-  //       count: state.count + 1
-  //     });
-  //   case DECREMENT: 
-  //     return Object.assign({}, state, {
-  //       count: state.count - 1
-  //     });    
-  //   default:
-  //     return state;
-  // }
-}
+const streamux = Streamux(Streamux.combine({
+  counter
+}), {
+  debug: true
+});
 
 function counter(state = { count: 0 }, action, types) {
   const { 
@@ -70,3 +57,4 @@ streamux
       }}/>, mount);
   });
 
+devtools(streamux);
