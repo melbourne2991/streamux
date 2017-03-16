@@ -1,12 +1,13 @@
 import './global.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Streamux from '../../lib';
+import Streamux, { combine, StateCache$ } from '../../lib';
 import App from './App';
 import devtools from '../../devtools/dist/bundle.js';
 
 const mount = document.getElementById('mount');
-const streamux = Streamux(Streamux.combine({
+
+const streamux = Streamux(combine({
   counter
 }), {
   debug: true
@@ -32,21 +33,23 @@ function counter(state = { count: 0 }, action, types) {
   }
 }
 
-const increment = streamux.createAction('INCREMENT');
-const decrement = streamux.createAction('DECREMENT');
+
+const stateCache = StateCache$(streamux);
+
+
+const increment = stateCache.createAction('INCREMENT');
+const decrement = stateCache.createAction('DECREMENT');
 
 const undo = () => {
-  streamux.undo(1);
-}
+  stateCache.undo(1);
+};
 
 const redo = () => {
-  streamux.redo(1);
-}
+  stateCache.redo(1);
+};
 
-streamux
-  .observable
+devtools(stateCache)
   .subscribe((state) => {
-    console.log(state);
     ReactDOM.render(<App 
       {...state}
       actions={{ 
@@ -57,4 +60,6 @@ streamux
       }}/>, mount);
   });
 
-devtools(streamux);
+
+
+// devtools(streamux, cache);

@@ -17,23 +17,14 @@ renderDebugger({
   currentState: null
 });
 
-export default (streamux) => {
-  streamux
-    .observable
-    .subscribe((state) => {
-      console.log('states', streamux.states);
-
+export default (stateCache) => {
+  return stateCache
+    .state$
+    .do((state) => {
       renderDebugger({
-        stateHistory: streamux.states,
+        goToState: (stateIndex) => stateCache.setHead(stateIndex),
+        stateHistory: stateCache.states,
         currentState: state
       });
-
-      // console.log(streamux);
-      // ReactDOM.render(
-      //   <DebuggerWindow 
-      //     stateHistory={streamux.states}
-      //     currentState={state}/>,
-      //     debuggerMount
-      // );
     });
 }

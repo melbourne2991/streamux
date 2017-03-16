@@ -9479,10 +9479,18 @@ var style = {
 
 function DebuggerWindow(_ref) {
   var stateHistory = _ref.stateHistory,
-      currentState = _ref.currentState;
+      currentState = _ref.currentState,
+      goToState = _ref.goToState;
 
   var snapshots = stateHistory.map(function (state, i) {
+    var isCurrentState = currentState === state;
+    console.log(state, currentState, isCurrentState);
+
     return _react2.default.createElement(_Snapshot2.default, {
+      onClick: function onClick() {
+        return goToState(i);
+      },
+      currentState: isCurrentState,
       key: i,
       content: JSON.stringify(state) });
   });
@@ -9523,12 +9531,24 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Snapshot(_ref) {
-  var content = _ref.content;
+  var content = _ref.content,
+      currentState = _ref.currentState,
+      onClick = _ref.onClick;
+
+  var styles = {};
+
+  if (currentState === true) {
+    styles.backgroundColor = 'green';
+  }
 
   return _react2.default.createElement(
     'div',
-    null,
-    content
+    { style: styles, onClick: onClick },
+    _react2.default.createElement(
+      'div',
+      null,
+      content
+    )
   );
 }
 
@@ -21799,22 +21819,15 @@ renderDebugger({
   currentState: null
 });
 
-exports.default = function (streamux) {
-  streamux.observable.subscribe(function (state) {
-    console.log('states', streamux.states);
-
+exports.default = function (stateCache) {
+  return stateCache.state$.do(function (state) {
     renderDebugger({
-      stateHistory: streamux.states,
+      goToState: function goToState(stateIndex) {
+        return stateCache.setHead(stateIndex);
+      },
+      stateHistory: stateCache.states,
       currentState: state
     });
-
-    // console.log(streamux);
-    // ReactDOM.render(
-    //   <DebuggerWindow 
-    //     stateHistory={streamux.states}
-    //     currentState={state}/>,
-    //     debuggerMount
-    // );
   });
 };
 

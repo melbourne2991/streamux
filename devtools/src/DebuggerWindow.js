@@ -10,10 +10,15 @@ const style = {
   bottom: 0
 };
 
-export default function DebuggerWindow({ stateHistory, currentState }) {
+export default function DebuggerWindow({ stateHistory, currentState, goToState }) {
   const snapshots = stateHistory.map((state, i) => {
+    const isCurrentState = currentState === state;
+    console.log(state, currentState, isCurrentState);
+
     return (
-      <Snapshot 
+      <Snapshot
+        onClick={() => goToState(i)}
+        currentState={isCurrentState}
         key={i} 
         content={JSON.stringify(state)}/>
     );

@@ -8,6 +8,10 @@ export default ({ actions, counter }) => {
       <button onClick={actions.decrement}>Decrement</button>
       <button onClick={actions.undo}>Undo</button>
       <button onClick={actions.redo}>Redo</button>
+      <input type="text" onKeyPress={(e) => {
+        console.log(e);
+        console.log(e.target.value);
+      }}/>
     </div>
   )
 }
