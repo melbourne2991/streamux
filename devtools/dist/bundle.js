@@ -9484,7 +9484,6 @@ function DebuggerWindow(_ref) {
 
   var snapshots = stateHistory.map(function (state, i) {
     var isCurrentState = currentState === state;
-    console.log(state, currentState, isCurrentState);
 
     return _react2.default.createElement(_Snapshot2.default, {
       onClick: function onClick() {

@@ -1,62 +1,34 @@
 import './global.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Streamux, { combine, StateCache$ } from '../../lib';
+import createStore, { combine, reducer, recordState$ } from '../../lib';
+import * as reducers from './reducers';
 import App from './App';
 import devtools from '../../devtools/dist/bundle.js';
 
 const mount = document.getElementById('mount');
-
-const streamux = Streamux(combine({
-  counter
-}), {
-  debug: true
-});
-
-function counter(state = { count: 0 }, action, types) {
-  const { 
-    INCREMENT, 
-    DECREMENT 
-  } = types;
-
-  switch(action.type) {
-    case INCREMENT:
-      return Object.assign({}, state, {
-        count: state.count + 1
-      });
-    case DECREMENT: 
-      return Object.assign({}, state, {
-        count: state.count - 1
-      });    
-    default:
-      return state;
-  }
-}
-
-
-const stateCache = StateCache$(streamux);
-
-
-const increment = stateCache.createAction('INCREMENT');
-const decrement = stateCache.createAction('DECREMENT');
+const store = createStore(combine(reducers));
+const cache = recordState$(store)
 
 const undo = () => {
-  stateCache.undo(1);
+  cache.undo(1);
 };
 
 const redo = () => {
-  stateCache.redo(1);
+  cache.redo(1);
 };
 
-devtools(stateCache)
+devtools(cache)
   .subscribe((state) => {
     ReactDOM.render(<App 
       {...state}
-      actions={{ 
-        increment, 
-        decrement, 
+      actions={{
+        updateInput: store.actions.updateInput,
+        increment: store.actions.increment, 
+        decrement: store.actions.decrement,
+        getJoke: store.actions.getJoke,
         redo, 
-        undo 
+        undo,
       }}/>, mount);
   });
 

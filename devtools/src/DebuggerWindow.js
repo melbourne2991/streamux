@@ -13,7 +13,6 @@ const style = {
 export default function DebuggerWindow({ stateHistory, currentState, goToState }) {
   const snapshots = stateHistory.map((state, i) => {
     const isCurrentState = currentState === state;
-    console.log(state, currentState, isCurrentState);
 
     return (
       <Snapshot

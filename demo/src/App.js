@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default ({ actions, counter }) => {
+export default ({ actions, counter, input, norris }) => {
+  const jokes = norris.jokes.map((joke) => {
+    return <div>{joke}</div>
+  });
+
   return (
     <div>
       <div>Counter: { counter.count }</div>
@@ -8,10 +12,13 @@ export default ({ actions, counter }) => {
       <button onClick={actions.decrement}>Decrement</button>
       <button onClick={actions.undo}>Undo</button>
       <button onClick={actions.redo}>Redo</button>
-      <input type="text" onKeyPress={(e) => {
-        console.log(e);
-        console.log(e.target.value);
+      <input type="text" value={input.value} onChange={(e) => {
+        actions.updateInput(e.target.value);
       }}/>
+
+      <button onClick={() => actions.getJoke()}>Get norris</button>
+
+      {jokes}
     </div>
   )
 }
