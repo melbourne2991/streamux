@@ -16,7 +16,7 @@ export default ({ actions, counter, input, norris }) => {
         actions.updateInput(e.target.value);
       }}/>
 
-      <button onClick={() => actions.getJoke()}>Get norris</button>
+      <button onClick={() => actions.fetchJoke()}>Get norris</button>
 
       {jokes}
     </div>

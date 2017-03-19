@@ -7,15 +7,15 @@ export default reducer({
     loading: false
   },
 
-  getJoke(state, payload) {
-    return Object.assign({}, state, {
-      loading: true
-    });
-  },
+  // getJoke(state, payload) {
+  //   return Object.assign({}, state, {
+  //     loading: true
+  //   });
+  // },
 
-  receiveJoke(state, payload) {
-    return Object.assign({}, state, {
-      loading: false
-    })
-  },
+  // receiveJoke(state, payload) {
+  //   return Object.assign({}, state, {
+  //     loading: false
+  //   });
+  // },
 });
