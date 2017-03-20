@@ -5,10 +5,10 @@ import createStore, { combine, reducer, recordState$ } from '../../lib';
 import * as reducers from './reducers';
 import App from './App';
 import devtools from '../../devtools/dist/bundle.js';
-import * as effects from './effects';
+import * as actionCreators from './actionCreators';
 
 const mount = document.getElementById('mount');
-const store = createStore(combine(reducers), effects);
+const store = createStore(combine(reducers), actionCreators);
 const cache = recordState$(store)
 
 const undo = () => {

@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default ({ actions, counter, input, norris }) => {
-  const jokes = norris.jokes.map((joke) => {
-    return <div>{joke}</div>
+  const jokes = norris.jokes.map((joke, i) => {
+    return <div key={i}>{joke}</div>
   });
 
   return (
