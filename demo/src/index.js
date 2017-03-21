@@ -1,7 +1,7 @@
 import './global.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createStore, { combine, reducer, recordState$ } from '../../lib';
+import createStore, { combine, reducer, recordState } from '../../lib';
 import * as reducers from './reducers';
 import App from './App';
 import devtools from '../../devtools/dist/bundle.js';
@@ -9,7 +9,7 @@ import * as actionCreators from './actionCreators';
 
 const mount = document.getElementById('mount');
 const store = createStore(combine(reducers), actionCreators);
-const cache = recordState$(store)
+const cache = recordState(store)
 
 const undo = () => {
   cache.undo(1);
@@ -27,7 +27,3 @@ devtools(cache)
       {...state}
       actions={actions}/>, mount);
   });
-
-
-
-// devtools(streamux, cache);

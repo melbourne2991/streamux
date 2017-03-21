@@ -1,8 +1,11 @@
 import React from 'react';
+import { AllHtmlEntities } from 'html-entities'
+
+const entities = new AllHtmlEntities();
 
 export default ({ actions, counter, input, norris }) => {
   const jokes = norris.jokes.map((joke, i) => {
-    return <div key={i}>{joke}</div>
+    return <div key={i}>{entities.decode(joke)}</div>
   });
 
   return (
