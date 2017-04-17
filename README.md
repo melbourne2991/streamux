@@ -1,5 +1,6 @@
 # Just another redux clone
 
+Very similar to redux except it uses RxJS to return a state$ Observable.
 *This is an experiment, not ready for use in the real world, just use redux :)*
 
 ## Run Demo
@@ -63,7 +64,7 @@ store
   });
 ```
 
-## Undo/Redo
+### Undo/Redo
 
 ```
 import createStore, { combineReducers, RecordState } from '../../lib'; // not yet published to npm
@@ -92,7 +93,7 @@ cache
   });
 ```
 
-## With devtools
+### With devtools
 
 ```
 import devtools from '../../devtools/dist/bundle.js';
