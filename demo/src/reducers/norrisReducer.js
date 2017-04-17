@@ -7,27 +7,16 @@ export default reducer({
     loading: false
   },
 
-  FETCH_JOKE(state, payload) {
+  FETCH_JOKE(state, { payload }) {
     return Object.assign({}, state, {
       loading: true
     });
   },
 
-  RECEIVE_JOKE(state, payload) {
+  RECEIVE_JOKE(state, { payload }) {
     return Object.assign({}, state, {
       loading: false,
       jokes: state.jokes.concat([payload])
     });
   }
-  // getJoke(state, payload) {
-  //   return Object.assign({}, state, {
-  //     loading: true
-  //   });
-  // },
-
-  // receiveJoke(state, payload) {
-  //   return Object.assign({}, state, {
-  //     loading: false
-  //   });
-  // },
 });

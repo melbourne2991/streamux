@@ -18,13 +18,15 @@ renderDebugger({
 });
 
 export default (stateCache) => {
-  return stateCache
-    .state$
-    .do((state) => {
-      renderDebugger({
-        goToState: (stateIndex) => stateCache.setHead(stateIndex),
-        stateHistory: stateCache.states,
-        currentState: state
-      });
-    });
+  return {
+    state$: stateCache
+      .state$
+      .do((state) => {
+        renderDebugger({
+          goToState: (stateIndex) => stateCache.setHead(stateIndex),
+          stateHistory: stateCache.states,
+          currentState: state
+        });
+      })
+  }
 }

@@ -5,7 +5,7 @@ export default reducer({
     value: 'fake'
   },
 
-  updateInput(state, payload) {
+  UPDATE_INPUT(state, { payload }) {
     return Object.assign({}, state, {
       value: payload
     });

@@ -5,13 +5,13 @@ export default reducer({
     count: 0 
   },
 
-  increment(state, payload) {
+  INCREMENT(state, { payload }) {
     return Object.assign({}, state, {
       count: state.count + 1
     });
   },
 
-  decrement(state, payload) {
+  DECREMENT(state, { payload }) {
     return Object.assign({}, state, {
       count: state.count - 1
     });
